@@ -104,7 +104,7 @@ def plot_episode(states_log, actions_log, rewards_log, save_path="plots/episode.
     normal_lo   = [60,  90,  95,  36.5, 0.5]
     normal_hi   = [100, 120, 100, 37.5, 2.0]
     states_arr  = np.array(states_log)
-    steps       = list(range(len(states_arr)))
+    steps       = list(range(len(rewards_log)))
 
     fig, axes = plt.subplots(3, 2, figsize=(13, 10))
     fig.suptitle("Episode trace — patient vitals over time", fontsize=13, fontweight="bold")
@@ -112,7 +112,7 @@ def plot_episode(states_log, actions_log, rewards_log, save_path="plots/episode.
 
     for i, (name, lo, hi) in enumerate(zip(vital_names, normal_lo, normal_hi)):
         ax = axes_flat[i]
-        vals = states_arr[:, i]
+        vals = states_arr[1:, i]
         ax.plot(steps, vals, color=COLORS["rl"], linewidth=2, marker="o", markersize=4)
         ax.axhspan(lo, hi, alpha=0.1, color="green", label="Normal range")
         ax.axhline(lo, color="green", linewidth=0.8, linestyle="--", alpha=0.6)
